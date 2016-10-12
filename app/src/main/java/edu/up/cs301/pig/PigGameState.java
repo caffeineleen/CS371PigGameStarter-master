@@ -31,7 +31,7 @@ public class PigGameState extends GameState
     }
     //copy constructor
 
-    int getPlayerID(){
+    public int getPlayerID(){
         return playerID;
     }
     int getScore0(){
