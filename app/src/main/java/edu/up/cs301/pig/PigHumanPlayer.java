@@ -63,14 +63,21 @@ public class PigHumanPlayer extends GameHumanPlayer implements OnClickListener {
     public void receiveInfo(GameInfo info) {
         if (info instanceof PigGameState)
         {
+            int play = ((PigGameState) info).getScore0();
+            int opp = ((PigGameState) info).getScore1();
+            int total = ((PigGameState) info).getRunningTotal();
+
             if(playerNum == 0) {
-                playerScoreTextView.setText(((PigGameState) info).getScore0());
+                playerScoreTextView.setText("" + play);
+                oppScoreTextView.setText("" + opp);
             }
-            else{
-                oppScoreTextView.setText(((PigGameState) info).getScore1());
+            else if(playerNum == 1)
+            {
+                playerScoreTextView.setText("" + opp);
+                oppScoreTextView.setText("" + play);
             }
 
-            turnTotalTextView.setText(((PigGameState) info).getRunningTotal());
+            turnTotalTextView.setText("" + total);
 
             if (((PigGameState) info).getCurrentVal() == 1)
             {
@@ -115,7 +122,6 @@ public class PigHumanPlayer extends GameHumanPlayer implements OnClickListener {
             PigRollAction roll = new PigRollAction(this);
             game.sendAction(roll);
         }
-
 
     }// onClick
 

@@ -1,5 +1,7 @@
 package edu.up.cs301.pig;
 
+import android.util.Log;
+
 import java.util.Random;
 
 import edu.up.cs301.game.GameComputerPlayer;
@@ -30,23 +32,25 @@ public class PigComputerPlayer extends GameComputerPlayer {
      */
     @Override
     protected void receiveInfo(GameInfo info) {
-        // TODO  You will implement this method
-        if(info instanceof PigGameState){
-            if(((PigGameState) info).getPlayerID() != playerNum){
+
+        if(info instanceof PigGameState) {
+            if (((PigGameState) info).getPlayerID() != playerNum) {
                 return;
             }
-        }
-        else{
-            Random diceTurn = new Random();
-            int selection = diceTurn.nextInt(2);
+            else {
+                Random diceTurn = new Random();
+                int selection = diceTurn.nextInt(2);
 
-            if(selection == 0){
-                PigHoldAction hold = new PigHoldAction(this);
-                game.sendAction(hold);
-            }
-            else{
-                PigRollAction roll = new PigRollAction(this);
-                game.sendAction(roll);
+                if (selection == 0) {
+                    PigHoldAction hold = new PigHoldAction(this);
+                    game.sendAction(hold);
+                    Log.i("Random Hold" ,"Hold");
+                } else {
+                    PigRollAction roll = new PigRollAction(this);
+                    game.sendAction(roll);
+                    Log.i("Random Roll", "Roll");
+                }
+                Log.i("computer", "works");
             }
         }
     }//receiveInfo

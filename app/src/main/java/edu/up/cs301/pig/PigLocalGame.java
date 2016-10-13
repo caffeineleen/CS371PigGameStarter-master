@@ -33,7 +33,7 @@ public class PigLocalGame extends LocalGame
      */
     @Override
     protected boolean canMove(int playerIdx) {
-        if (playerIdx == getPlayerIdx(players[0]))
+        if (playerIdx == pig.getPlayerID())
         {
             return true;
         }
@@ -47,7 +47,7 @@ public class PigLocalGame extends LocalGame
      */
     @Override
     protected boolean makeMove(GameAction action) {
-        if(canMove(pig.getPlayerID())) {
+        if(action.getPlayer() == players[pig.getPlayerID()]) {
             if (action instanceof PigRollAction) {
                 int diceVal = pig.getCurrentVal();
                 Random val = new Random();
@@ -59,22 +59,23 @@ public class PigLocalGame extends LocalGame
                     pig.setRunningTotal(pig.getRunningTotal() + diceVal);
                 } else if (diceVal == 1) {
                     pig.setRunningTotal(0);
-                }
 
-                if (pig.getPlayerID() == 1) {
-                    pig.setPlayerID(0);
-                } else if (pig.getPlayerID() == 0) {
-                    pig.setPlayerID(1);
+                    if (pig.getPlayerID() == 1) {
+                        pig.setPlayerID(0);
+                    } else if (pig.getPlayerID() == 0) {
+                        pig.setPlayerID(1);
+                    }
                 }
                 return true;
-            } else if (action instanceof PigHoldAction) {
+            }
+            else if (action instanceof PigHoldAction) {
                 if (pig.getPlayerID() == 0) {
-                    pig.setScore0(pig.getRunningTotal());
+                    pig.setScore0(pig.getRunningTotal()+pig.getScore0());
                     pig.setRunningTotal(0);
 
                     pig.setPlayerID(1);
                 } else if (pig.getPlayerID() == 1) {
-                    pig.setScore1(pig.getRunningTotal());
+                    pig.setScore1(pig.getRunningTotal()+pig.getScore1());
                     pig.setRunningTotal(0);
 
                     pig.setPlayerID(0);
